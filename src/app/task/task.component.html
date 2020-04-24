@@ -1,0 +1,147 @@
+<div mat-dialog-content class="text-center taskModal">
+  <form (submit)="editSchoolSubject(data)">
+    <div class="row w-100">
+      <div class="col-md-6 col-sm-12">
+        <mat-form-field class="w-100">
+          <mat-label>Title</mat-label>
+          <input type="text" matInput required name="task_title" [(ngModel)]="data.task.task.title">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-sm-12 text-right createdBy">
+        <p>Created by: {{data.task.task.created_by.first_name}} {{data.task.task.created_by.last_name}}</p>
+      </div>
+      <div class="col-md-3 col-sm-12 pr-1">
+        <mat-form-field class="w-100">
+          <input matInput [matDatepicker]="pickerStart" [(ngModel)]="data.task.task.start_date"
+                 placeholder="Start date" disabled (dateChange)="onChangeBirthDate($event)"
+                 [ngModelOptions]="{standalone: true}" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #pickerStart disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 col-sm-12 pr-1">
+        <mat-form-field class="w-100">
+          <input matInput [matDatepicker]="pickerEnd" [(ngModel)]="data.task.task.end_date"
+                 placeholder="End date" disabled (dateChange)="onChangeBirthDate($event)"
+                 [ngModelOptions]="{standalone: true}" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #pickerEnd disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 col-sm-12 pr-1">
+        <mat-form-field class="w-100">
+          <mat-label>Estimate (min)</mat-label>
+          <input type="text" matInput required name="task_estimate" [(ngModel)]="data.task.task.estimate">
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 col-sm-12 pr-1">
+        <mat-form-field class="w-100">
+          <mat-label>Percent (%)</mat-label>
+          <input type="text" matInput required name="task_percent" [(ngModel)]="data.task.task.percent">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-sm-12 pr-1 prioritySelect">
+      <mat-form-field class="w-100">
+        <mat-label>Priority</mat-label>
+        <mat-select (selectionChange)="onChangePriority($event)" name="task_priority" [(ngModel)]="data.task.task.priority.id" required>
+          <mat-option *ngFor="let p of data.priorities" [value]="p.id">
+            <p>{{ p.name }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 col-sm-12 trackedRoadmapSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Tracked Roadmap</mat-label>
+        <mat-select (selectionChange)="onChangeTrackedRoadmap($event)" name="task_tracker_roadmap" [(ngModel)]="data.task.tracker_roadmap.id" required>
+          <mat-option *ngFor="let trm of data.trackerRoadmaps" [value]="trm.id">
+            <p>{{ trm.name }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+      <div class="col-md-4 col-sm-12 pr-1 departmentSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Department</mat-label>
+        <mat-select (selectionChange)="onChangeDepartment($event)" name="task_department" [(ngModel)]="data.task.task.department.id" required>
+          <mat-option *ngFor="let d of departments" [value]="d.id">
+            <p>{{ d.name }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-sm-12 pr-1 roleSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Role</mat-label>
+        <mat-select (selectionChange)="onChangeRole($event)" name="task_role" [(ngModel)]="data.task.task.role.id" required>
+          <mat-option *ngFor="let r of roles" [value]="r.id">
+            <p>{{ r.name }} ({{ r.department.name}})</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-sm-12 pr-1 trackedRoadmapSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Assigned to</mat-label>
+        <mat-select (selectionChange)="onChangeAssignedTo($event)" name="task_assigned_to" [(ngModel)]="data.task.task.assigned_to.id" required>
+          <mat-option *ngFor="let user of assignedUsers" [value]="user.id">
+            <p>{{ user.first_name }} {{ user.last_name }} {{ user.email }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+      <div class="col-md-12 col-sm-12 pr-1 trackedRoadmapSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Task Description</mat-label>
+        <textarea type="text" matInput required name="task_content" [(ngModel)]="data.task.task.content"></textarea>
+      </mat-form-field>
+    </div>
+    </div>
+
+    <!--<div>-->
+      <!--<mat-form-field class="w-100">-->
+        <!--<mat-label>School subject name</mat-label>-->
+        <!--<input type="text" matInput required name="school_subject_name" [(ngModel)]="data.schoolSubjectName">-->
+      <!--</mat-form-field>-->
+      <!--<div class="w-100 text-left mb-1">-->
+        <!--<mat-label class="mr-1">Active</mat-label>-->
+        <!--<mat-checkbox [(ngModel)]="data.isActive" [ngModelOptions]="{standalone: true}"></mat-checkbox>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="text-center">-->
+      <!--<button type="submit" [disabled]="data.schoolSubjectName ? false: true" mat-raised-button color="primary"-->
+              <!--class="btn-block">-->
+        <!--Edit-->
+      <!--</button>-->
+    <!--</div>-->
+    <!--<div class="text-center mt-1">-->
+      <!--<button type="button" mat-raised-button class="btn-block" cdkFocusInitial-->
+              <!--(click)="onNoClick()">Close-->
+      <!--</button>-->
+    <!--</div>-->
+  </form>
+  <!--<div class="text-center mt-1">-->
+      <!--<button type="button" mat-raised-button class="btn-block closeButton" cdkFocusInitial-->
+              <!--(click)="onNoClick()">Close-->
+      <!--</button>-->
+    <!--</div>-->
+</div>
+<div mat-dialog-actions class="w-100">
+  <div class="row w-100">
+    <div class="col-md-4 col-sm-12 pr-1 mb-1 buttons">
+      <button type="button" mat-raised-button class="btn-block closeButton" cdkFocusInitial
+              (click)="onNoClick()">Close
+      </button>
+    </div>
+    <div class="col-md-4 col-sm-12 pr-1 mb-1 buttons">
+      <button type="button" mat-raised-button class="btn-block closeButton" cdkFocusInitial
+              (click)="onNoClick()">Log time
+      </button>
+    </div>
+    <div class="col-md-4 col-sm-12 pr-1 mb-1 buttons">
+      <button type="button" mat-raised-button class="btn-block closeButton" cdkFocusInitial
+              (click)="onNoClick()">Edit
+      </button>
+    </div>
+  </div>
+</div>

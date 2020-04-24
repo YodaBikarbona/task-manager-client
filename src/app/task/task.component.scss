@@ -1,0 +1,59 @@
+.closeButton {
+  background-color: #5F506B !important;
+  border: 1px solid white;
+
+  &:hover {
+    @media (min-width: 900px) {
+      background-color: #75485E !important;
+      color: white !important;
+      transition: background-color 500ms ease, color 500ms ease;
+    }
+  }
+
+  @media (max-width: 899px) {
+    background-color: #42213D !important;
+    color: white !important;
+  }
+}
+
+.createdBy {
+  @media (max-width: 899px) {
+    text-align: left;
+  }
+}
+
+/deep/ .cdk-overlay-pane {
+  @media (max-width: 767px) {
+    max-width: unset !important;
+    //height: 100%;
+  }
+}
+
+.taskModal {
+  textarea {
+    min-height: 300px;
+    resize: none !important;
+  }
+  /deep/ .mat-form-field.mat-focused .mat-form-field-label {
+    color: white !important;
+  }
+  /deep/ .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: white !important;
+  }
+
+  /deep/ .mat-input-element {
+    caret-color: #42213D !important;
+  }
+
+  /deep/ .mat-datepicker-toggle-active {
+    color: #42213D !important;
+  }
+}
+
+/deep/ .mat-dialog-container {
+  background-color: #5F506B !important;
+  border: 1px solid white;
+  @media (min-width: 767px) {
+    box-shadow: 0px 10px 10px #5F506B;
+  }
+}

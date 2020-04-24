@@ -1,0 +1,76 @@
+@import "~src/palette";
+.login-container {
+  position: absolute;
+  height: 100%;
+  background-color: $login-container;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  font-weight: 100;
+}
+
+.login-form-container {
+  width: 500px;
+  position: relative;
+  background-color: $form-container;
+  color: white;
+  box-shadow: 0px 10px 20px $form-login-input;
+  @media (max-width: 767px) {
+    width: 90%;
+  }
+}
+
+.login-form {
+  .title {
+    h3 {
+      font-weight: 400;
+    }
+  }
+  .input {
+    height: 30px;
+    border: 1px solid black;
+    background-color: $form-login-input;
+    i {
+      width: 10%;
+    }
+    input {
+      height: 28px;
+      width: 90%;
+      border: none;
+      background-color: transparent;
+      color: white;
+      &::placeholder {
+        font-size: 15px;
+        color: white;
+      }
+    }
+  }
+  .log-in-button {
+    button {
+      height: 30px;
+      width: 60px;
+      background-color: $form-login-button;
+      color: white;
+      border: 1px solid black;
+      @media (max-width: 767px) {
+        width: 100%;
+        background-color: $form-container;
+        border-color: white;
+      }
+      @media (min-width: 900px) {
+        &:hover {
+          background-color: $form-container;
+          border-color: white;
+          transition: background-color 500ms ease, border-color 500ms ease;
+        }
+      }
+    }
+  }
+  .forgot-password {
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+}

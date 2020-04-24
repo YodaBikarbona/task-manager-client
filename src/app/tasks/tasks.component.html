@@ -1,0 +1,124 @@
+<div class="taskContainer w-100">
+  <div class="row w-100">
+    <div class="col-md-12 col-sm-12">
+      <h3>Filter by</h3>
+    </div>
+    <div class="col-md-3 col-sm-12 pr-1 departmentSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Department</mat-label>
+        <mat-select (selectionChange)="onChangeDepartment($event)" [(ngModel)]="departmentId">
+          <mat-option *ngFor="let d of departments" [value]="d.id">
+            <p>{{ d.name }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 col-sm-12 pr-1 roleSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Role</mat-label>
+        <mat-select (selectionChange)="onChangeRole($event)" [(ngModel)]="roleId">
+          <mat-option *ngFor="let r of roles" [value]="r.id">
+            <p>{{ r.name }} ({{ r.department.name}})</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 col-sm-12 pr-1 trackedRoadmapSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Assigned to</mat-label>
+        <mat-select (selectionChange)="onChangeAssignedTo($event)" [(ngModel)]="assignedToId">
+          <mat-option *ngFor="let user of assignedUsers" [value]="user.id">
+            <p>{{ user.first_name }} {{ user.last_name }} {{ user.email }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 col-sm-12 pr-1 prioritySelect">
+      <mat-form-field class="w-100">
+        <mat-label>Priority</mat-label>
+        <mat-select (selectionChange)="onChangePriority($event)" [(ngModel)]="priorityId">
+          <mat-option *ngFor="let p of priorities" [value]="p.id">
+            <p>{{ p.name }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 col-sm-12 trackedRoadmapSelect">
+      <mat-form-field class="w-100">
+        <mat-label>Tracked Roadmap</mat-label>
+        <mat-select (selectionChange)="onChangeTrackedRoadmap($event)" [(ngModel)]="trackedRoadMapId">
+          <mat-option *ngFor="let trm of trackerRoadmaps" [value]="trm.id">
+            <p>{{ trm.name }}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-sm-12 mb-1 clearFilters">
+      <button mat-raised-button color="primary" class="w-100 clearFiltersButton"
+              (click)="clearFilters()">Clear filters</button>
+    </div>
+    <div class="col-md-9 col-sm-0 mb-1"></div>
+  </div>
+  <div class="row taskCard" *ngIf="trackedRoadMapTasks">
+    <div class="col-md-4 col-sm-12 mb-1 text-center p-1" *ngFor="let task of trackedRoadMapTasks">
+      <mat-card (click)="openTask(task)">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6 label text-left"><p>Title: </p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-left content"><p>{{task.task.title}}</p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 label text-left"><p>Assigned to: </p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-left content"><p>{{task.task.assigned_to.first_name}} {{task.task.assigned_to.last_name}}</p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 label text-left"><p>Department: </p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-left content"><p>{{task.task.department.name}}</p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 label text-left"><p>Role: </p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-left content"><p>{{task.task.role.name}}</p></div>
+          <div class="col-md-3 col-sm-3 col-xs-3 label text-left"><p>Estimate: </p></div>
+          <div class="col-md-3 col-sm-3 col-xs-3 text-left pl-1 content"><p>{{task.task.estimate}}min</p></div>
+          <div class="col-md-3 col-sm-3 col-xs-3 label text-left"><p>Percent: </p></div>
+          <div class="col-md-3 col-sm-3 col-xs-3 text-left pl-1 content"><p>{{task.task.percent}}%</p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 label text-left"><p>Tracked RoadMap: </p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-left content"><p>{{task.tracker_roadmap.name}}</p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 label text-left"><p>Priority: </p></div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-left content"><p>{{task.task.priority.name}}</p></div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <!--<div class="row" *ngIf="trackerRoadmaps">-->
+    <!--<div class="col-md-12 col-sm-12 mb-1" *ngFor="let trm of trackerRoadmaps">-->
+      <!--<div class="w-100 dragAndDropContainer">-->
+        <!--<h2 class="mb-1 text-center w-100">{{trm.name}}</h2>-->
+        <!--<div class="row w-100 taskList" *ngIf="trm.tasks">-->
+          <!--<div class="col-md-12 col-sm-12 mb-1 task p-1" *ngFor="let task of trm.tasks">-->
+            <!--<div class="row">-->
+              <!--<div class="col-md-6 col-sm-12 mb-1">-->
+                <!--<p class="label">Title:</p><p>{{task.task.title}}</p>-->
+              <!--</div>-->
+              <!--<div class="col-md-6 col-sm-12 mb-1">-->
+                <!--<p class="label">Estimate:</p><p>{{task.task.estimate}}</p>-->
+              <!--</div>-->
+              <!--<div class="col-md-6 col-sm-12 mb-1">-->
+                <!--<p class="label">Percent:</p><p>{{task.task.percent}}</p>-->
+              <!--</div>-->
+              <!--<div class="col-md-6 col-sm-12 mb-1">-->
+                <!--<p class="label">Priority:</p>-->
+                <!--<p>{{task.task.priority.name}}</p>-->
+                <!--&lt;!&ndash;<p *ngIf="task.task.priority.name === 'No Priority'" class="noPriority">{{task.task.priority.name}}</p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p *ngIf="task.task.priority.name === 'Low Priority'" class="lowPriority">{{task.task.priority.name}}</p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p *ngIf="task.task.priority.name === 'Medium Priority'" class="mediumPriority">{{task.task.priority.name}}</p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p *ngIf="task.task.priority.name === 'High Priority'" class="highPriority">{{task.task.priority.name}}</p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p *ngIf="task.task.priority.name === 'Urgent Priority'" class="urgentPriority">{{task.task.priority.name}}</p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p *ngIf="task.task.priority.name === 'Emergency Priority'" class="emergencyPriority">{{task.task.priority.name}}</p>&ndash;&gt;-->
+              <!--</div>-->
+              <!--<div class="col-md-12 col-sm-12 mb-1">-->
+                <!--<button mat-raised-button color="primary" class="w-100 editTask"-->
+                        <!--(click)="clearFilters()">Edit</button>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+</div>
